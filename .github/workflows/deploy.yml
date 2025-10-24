@@ -11,19 +11,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Example deploy step (replace with your actual command)
-      - name: Deploy Service
-        run: echo "Deploying application..."  # Replace with your deploy logic
-
-    # This is just for example; you don't need 'outputs' unless you pass from a previous step
-    outputs:
-      status: ${{ steps.deploy-status.outputs.status }}  # Remove or adjust if unnecessary
+      - name: Simulate Deployment
+        run: echo "Deployment completed successfully."
 
   notify_status:
     needs: deploy
     uses: ./.github/workflows/notify-status.yml
     with:
-      deployment_status: ${{ needs.deploy.result }}  # Or use a fixed value like "success" if you prefer
+      deployment_status: ${{ needs.deploy.result }} # "success" or "failure"
       repo: ${{ github.repository }}
       sha: ${{ github.sha }}
-      recipient_email: "komalgt@gmail.com"
+      recipient_email: "kturakannavar@deloitte.com"
