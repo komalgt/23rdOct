@@ -26,4 +26,4 @@ jobs:
       deployment_status: ${{ needs.deploy.result }}  # Or use a fixed value like "success" if you prefer
       repo: ${{ github.repository }}
       sha: ${{ github.sha }}
-      recipient_email: "kturakannavar@deloitte.com"
+      recipient_email: "komalgt@gmail.com"
