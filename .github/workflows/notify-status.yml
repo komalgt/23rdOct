@@ -18,9 +18,20 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
-      - name: Output Deployment Notification
-        run: |
-          echo "Deployment Status: ${{ inputs.deployment_status }}"
-          echo "Repository: ${{ inputs.repo }}"
-          echo "Commit SHA: ${{ inputs.sha }}"
-          echo "Recipient Email: ${{ inputs.recipient_email }}"
+      - name: Send deployment notification email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          # Set secrets in your GitHub repo: GMAIL_USERNAME and GMAIL_PASSWORD
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "Deployment Status: ${{ inputs.deployment_status }}"
+          to: ${{ inputs.recipient_email }}
+          from: ${{ secrets.GMAIL_USERNAME }}
+          content_type: text/html
+          body: |
+            <p>Automated Deployment Notification</p>
+            <p><strong>Status:</strong> ${{ inputs.deployment_status }}</p>
+            <p><strong>Repository:</strong> ${{ inputs.repo }}</p>
+            <p><strong>SHA:</strong> ${{ inputs.sha }}</p>
