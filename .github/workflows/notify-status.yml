@@ -1,18 +1,24 @@
+name: Send Email Notification
+
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       deployment_status:
+        description: 'The deployment status'
         required: true
-        type: string
-      repo:
-        required: true
-        type: string
-      sha:
-        required: true
-        type: string
+        default: 'Success'
       recipient_email:
+        description: 'Recipient email address'
         required: true
-        type: string
+        default: 'recipient@example.com'
+      repo:
+        description: 'Repository name'
+        required: true
+        default: ${{ github.repository }}
+      sha:
+        description: 'Commit SHA'
+        required: true
+        default: ${{ github.sha }}
 
 jobs:
   notify:
@@ -24,13 +30,15 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: ${{ secrets.SMTP_USERNAME }}
-          password: ${{ secrets.SMTP_PASSWORD }}
-          from: "komalgt@gmail.com"
-          subject: "Deployment Status: ${{ inputs.deployment_status }}"
-          to: ${{ inputs.recipient_email }}
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "Deployment Status: ${{ github.event.inputs.deployment_status }}"
+          to: ${{ github.event.inputs.recipient_email }}
+          from: ${{ secrets.GMAIL_USERNAME }}
           html_body: |
             <p>Automated Deployment Notification</p>
-            <p><strong>Status:</strong> ${{ inputs.deployment_status }}</p>
-            <p><strong>Repository:</strong> ${{ inputs.repo }}</p>
-            <p><strong>SHA:</strong> ${{ inputs.sha }}</p>
+            <ul>
+              <li><strong>Status:</strong> ${{ github.event.inputs.deployment_status }}</li>
+              <li><strong>Repository:</strong> ${{ github.event.inputs.repo }}</li>
+              <li><strong>SHA:</strong> ${{ github.event.inputs.sha }}</li>
+            </ul>
