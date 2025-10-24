@@ -1,0 +1,32 @@
+name: Notify Deployment Status
+
+on:
+  workflow_call:
+    inputs:
+      deployment_status:
+        required: true
+        type: string
+      repo:
+        required: true
+        type: string
+      sha:
+        required: true
+        type: string
+      recipient_email:
+        required: true
+        type: string
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email Notification
+        uses: mikepenz/action-mail@v3
+        with:
+          connection_url: ${{ secrets.EMAIL_CONNECTION_URL }}
+          subject: "[${{ inputs.repo }}] Deployment Status: ${{ inputs.deployment_status }}"
+          to: ${{ inputs.recipient_email }}
+          body: |
+            Repository: ${{ inputs.repo }}
+            Commit: ${{ inputs.sha }}
+            Deployment Status: ${{ inputs.deployment_status }}
