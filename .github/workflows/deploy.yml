@@ -29,4 +29,4 @@ jobs:
           deployment_status: ${{ needs.deploy.outputs.status }}
           repo: ${{ github.repository }}
           sha: ${{ github.sha }}
-          recipient_email: your_email@example.com     # CHANGE to your destination email
+          recipient_email: kturakannavar@deloitte.com     # CHANGE to your destination email
