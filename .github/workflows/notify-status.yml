@@ -28,7 +28,7 @@ jobs:
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: "Deployment Status: ${{ inputs.deployment_status }}"
           to: ${{ inputs.recipient_email }}
-          from: "komalgt@gmail.com"
+          from: ${{ secrets.SMTP_USERNAME }}
           html_body: |
             <p>Automated Deployment Notification</p>
             <p><strong>Status:</strong> ${{ inputs.deployment_status }}</p>
