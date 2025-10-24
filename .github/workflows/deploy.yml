@@ -11,12 +11,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+    outputs:
+      result: ${{ steps.deploy-status.outputs.status }} # Optional: Example if you use a step that sets output 'status'
 
   notify_status:
     needs: deploy
     uses: ./.github/workflows/notify-status.yml
     with:
-      deployment_status: ${{ needs.deploy.result }}
+      deployment_status: ${{ needs.deploy.outputs.result }}      # Use correct output reference
       repo: ${{ github.repository }}
       sha: ${{ github.sha }}
-      recipient_email: "your@email.com"
+      recipient_email: "kturakannavar@deloitte.com"
