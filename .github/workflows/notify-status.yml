@@ -26,6 +26,7 @@ jobs:
           secure: true
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
+          from: "komalgt@gmail.com"
           subject: "Deployment Status: ${{ inputs.deployment_status }}"
           to: ${{ inputs.recipient_email }}
           html_body: |
